@@ -7,7 +7,7 @@ use Carp;
 
 =head1 NAME
 
-List::Utils::Nest - The great new List::Utils::Nest!
+List::Utils::Nest - transform Hash Array to Nested Array
 
 =head1 VERSION
 
@@ -18,25 +18,60 @@ Version 0.01
 our $VERSION = '0.01';
 
 
-=head1 SYNOPSIS
+=head1 Usage
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
 
     use List::Utils::Nest;
+    my $sample = [
+       {userid => 1, itemid => 1, quantity => 3},
+       {userid => 1, itemid => 4, quantity => 3},
+       ...
+       {userid => 3, itemid => 2, quantity => 3},
+       {userid => 3, itemid => 4, quantity => 3},
+       {userid => 3, itemid => 4, quantity => 1},
+    ];
 
-    my $foo = List::Utils::Nest->new();
-    ...
+    my $entries = List::Utils::Nest->new($sample)->key('userid')->entries();
+
+    # [{
+         values => [
+           {userid => 1, itemid => 1, quantity => 3},
+           {userid => 1, itemid => 4, quantity => 3}
+         ],
+         key => 1
+       },
+       ...
+       {
+         values => [
+           {userid => 3, itemid => 2, quantity => 3},
+           {userid => 3, itemid => 4, quantity => 3},
+           {userid => 3, itemid => 4, quantity => 1}
+         ],
+         key => 3
+       }
+      ]
+
+`nest` is alias new List::Utils::Nest
+
+    my $entries = nest($sample)->key('userid')->entries();
+
+You can specify multiple keys
+
+    my $entries = nest($sample)->key('userid', 'itemid')->entries();
+
+And you can set delimiter below:
+
+    my $entries = nest($sample, delimiter => ",")->key('userid', 'itemid')->entries();
+
+You can specify depth more than one.
+    
+    my $entries = nest($sample, delimiter => ",")->key('userid')->key('itemid')->entries();
+
 
 =head1 EXPORT
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
-
-=head2 function1
 
 =cut
 
