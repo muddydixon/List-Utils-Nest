@@ -3,6 +3,7 @@ package List::Utils::Nest;
 use 5.006;
 use strict;
 use warnings;
+use Carp;
 
 =head1 NAME
 
@@ -39,24 +40,28 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =cut
 
-use base 'Exporter';
+require Exporter;
+our @ISA = qw/Exporter/;
 our @EXPORT = qw/nest/;
 
-my $DELIMITOR = "_____";
 sub new {
     my $class = shift;
     my $data = shift;
+    my %opt = @_;
+
     return bless {
         array => $data,
         keys => [],
         tree => {},
+        delimiter => $opt{delimiter} || "_____",
     }, $class;
 }
 
 sub nest {
     my $data = shift;
+    my %opt = @_;
     
-    my $self = new Array::Nest($data);
+    my $self = new List::Utils::Nest($data, %opt);
     $self;
 }
 
@@ -79,7 +84,7 @@ sub _entries {
     my %map;
     
     foreach my $obj (@$array){
-        my $k = join($DELIMITOR, map { (ref $_ ne "CODE") ? (exists $obj->{$_} ? $obj->{$_} : $DELIMITOR) : $_->($obj); } @$key);
+        my $k = join($self->{delimiter}, map { (ref $_ ne "COD") ? (exists $obj->{$_} ? $obj->{$_} : $self->{delimiter}) : $_->($obj); } @$key);
         $map{$k} = [] unless exists $map{$k};
         push @{$map{$k}}, $obj;
     }
