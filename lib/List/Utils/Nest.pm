@@ -11,11 +11,11 @@ List::Utils::Nest - transform Hash Array to Nested Array
 
 =head1 VERSION
 
-Version 0.01
+Version 0.01.1
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.01.1';
 
 
 =head1 Usage
@@ -119,7 +119,7 @@ sub _entries {
     my %map;
     
     foreach my $obj (@$array){
-        my $k = join($self->{delimiter}, map { (ref $_ ne "COD") ? (exists $obj->{$_} ? $obj->{$_} : $self->{delimiter}) : $_->($obj); } @$key);
+        my $k = join($self->{delimiter}, map { (ref $_ ne "CODE") ? (exists $obj->{$_} ? $obj->{$_} : $self->{delimiter}) : $_->($obj); } @$key);
         $map{$k} = [] unless exists $map{$k};
         push @{$map{$k}}, $obj;
     }
