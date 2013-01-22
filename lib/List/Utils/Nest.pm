@@ -119,7 +119,7 @@ sub _entries {
     my %map;
     
     foreach my $obj (@$array){
-        my $k = join($self->{delimiter}, map { (ref $_ ne "COD") ? (exists $obj->{$_} ? $obj->{$_} : $self->{delimiter}) : $_->($obj); } @$key);
+        my $k = join($self->{delimiter}, map { (ref $_ ne "CODE") ? (exists $obj->{$_} ? $obj->{$_} : $self->{delimiter}) : $_->($obj); } @$key);
         $map{$k} = [] unless exists $map{$k};
         push @{$map{$k}}, $obj;
     }
