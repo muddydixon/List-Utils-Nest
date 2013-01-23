@@ -1,6 +1,6 @@
 #!perl -T
 
-use Test::More tests => 75;
+use Test::More;
 use Data::Dumper;
 use List::Utils::Nest;
 
