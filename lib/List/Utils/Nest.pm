@@ -11,11 +11,11 @@ List::Utils::Nest - transform Hash Array to Nested Array
 
 =head1 VERSION
 
-Version 0.01.1
+Version 0.01.2
 
 =cut
 
-our $VERSION = '0.01.1';
+our $VERSION = '0.01.2';
 
 
 =head1 Usage
